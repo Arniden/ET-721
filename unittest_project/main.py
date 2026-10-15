@@ -22,7 +22,7 @@ class Connect4:
                     print('\033[94mO\033[0m', end='|')  # Blue for O
                 else:
                     print(' ', end='|')
-            print(
+            print()
         print('---------------')
         print(' 1 2 3 4 5 6 7')
 
