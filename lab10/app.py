@@ -22,6 +22,7 @@ def index():
 
 @app.route('/about')
 def about():
+    images = ['image1.jpeg', 'image2.jpeg', 'image3.jpeg'] 
     return render_template('about.html')
 
 @app.route('/quotes')

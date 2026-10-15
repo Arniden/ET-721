@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block title%}About Us {%endblock%}
-{%block msg%}about us{%endblock%}
-{%block content%}
-<h2>User in the list</h2>
-{%endblock%}
+{% block msg%}about us{% endblock %}
+{% block content%}
+<h2>My images</h2>
+{% for eachimage in listimages %}
+<img src="{{ url_for('static', filename='images/' ~ eachimage) }}" alt="{{ eachimage }}" width="300">
+{% endfor %}
+{% endblock %}
