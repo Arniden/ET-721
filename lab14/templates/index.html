@@ -4,57 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Item</title>
-    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 </head>
 <body>
-    <h1 class="title"> Arnaud Tadonkeng</h1>
-    <h2> Create Item</h2>
+    <h1 class="title">Arnaud Tadonkeng</h1>
+
+    <h2>Create item</h2>
     <form id="itemForm">
         <div class="formsession">
-            <label>Name:
+            <label>Name
                 <input type="text" id="name" required>
             </label>
         </div>
 
         <div class="formsession">
-            <label>Price:
+            <label>Price
                 <input type="text" id="price" required>
             </label>
         </div>
 
         <div class="formsession">
-            <button type="submit">SUBMIT</button>
+            <button type="submit">Add item</button>
         </div>
 
-          <p id="response"></p>
+        <p id="response"></p>
     </form>
 
-        <!-- LOADING ITEM -->
-        <section class="loaditems">
-            <h2>ALL ITEMS</h2>
-            <button onclick="loaditems()">LOAD ITEMS</button>
+    <!-- LOADING ITEMS -->
+    <section class="loaditems">
+        <h2>All items</h2>
+        <button type="button" onclick="loaditems()">Load items</button>
+        <ul class="itemslist"></ul>
+    </section>
 
-            <ul class="itemslist">
-                
-            </ul>
+    <!-- UPDATE AN ITEM NAME AND PRICE (hidden until Update is clicked) -->
+    <section id="updatesection" style="display: none">
+        <h3>Update item</h3>
+        <input type="hidden" id="updateID">
+        <label>Name
+            <input type="text" id="updateName">
+        </label>
+        <label>Price
+            <input type="text" id="updatePrice">
+        </label>
+        <button type="button" onclick="updateItem()">Save update</button>
+    </section>
 
-
-        </section>
-  
-        <!--TABLE TO UPDATE AN ITEM NAME AND PRICE-->
-        <section id="updatasection" style="display: block">
-            <h3>Update item</h3>
-            <input type="hidden" id="updateID">
-            <label>Name:
-                <input type="text" id="updateName">
-            </label>
-            <label>Price:
-                <input type="text" id="updatePrice">
-            </label>
-
-            <button onclick="updateItem()">SAVE UPDATE</button>
-        </section>
-
-    <script src="{{url_for('static', filename = 'app_script.js')}}"></script>
+    <script src="{{url_for('static', filename='app_script.js')}}"></script>
 </body>
 </html>

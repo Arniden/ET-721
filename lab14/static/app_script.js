@@ -1,4 +1,5 @@
 console.log("Arnaud Tadonkeng")
+
 // collect items from the form
 const itemForm = document.querySelector('#itemForm')
 
@@ -9,72 +10,81 @@ itemForm.addEventListener("submit", async function(event){
     const price = document.querySelector('#price').value
 
     try{
-        // await to pause request until the request finishes
-        //fetch() sends an HTTP request to a server
-        const res = await fetch("http://127.0.0.1:5000/items", {method: 'POST', headers: {"Content-type":"application/json"},
-            body: JSON.stringify({name:name, price:Number(price)})
-        }
-        )
+        // await pauses until the request finishes; fetch() sends an HTTP request
+        const res = await fetch("/items", {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({name: name, price: Number(price)})
+        })
         const data = await res.json()
         document.querySelector('#response').innerText = "Response: " + JSON.stringify(data)
+        itemForm.reset()
     }
     catch(error){
         document.querySelector('#response').innerText = "Error: " + error
     }
 })
 
-//LOADING ALL ITEMS
+// LOADING ALL ITEMS
 async function loaditems(){
-    const res = await fetch("http://127.0.0.1:5000/items")
+    const res = await fetch("/items")
     const data = await res.json()
 
-    // collect the elements to print all items
     const list = document.querySelector('.itemslist')
-    
-    // use a loop to place each tem in the json data to a list
+    list.innerHTML = ""   // clear the list so items are not duplicated on reload
+
     for (const id in data){
         const item = data[id]
         const li = document.createElement('li')
-        li.innerHTML = `
-        ID = ${id}, name = ${item.name}, price = ${item.price}
-        <button onclick = "showupdateform('${id}', '${item.name}', '${item.price}')"> Update </button>
-        <button onclick ="deleteitem('${id})">Delete</button>
-        `
 
+        const info = document.createElement('span')
+        info.className = "info"
+        info.textContent = `ID ${id}: ${item.name}, $${item.price}`
+
+        const updateBtn = document.createElement('button')
+        updateBtn.textContent = "Update"
+        updateBtn.addEventListener("click", () => showupdateform(id, item.name, item.price))
+
+        const deleteBtn = document.createElement('button')
+        deleteBtn.textContent = "Delete"
+        deleteBtn.className = "danger"
+        deleteBtn.addEventListener("click", () => deleteitem(id))
+
+        li.append(info, updateBtn, deleteBtn)
         list.appendChild(li)
     }
 }
-// function to collect the selected item, id, and price
+
+// show the update form filled with the selected item
 function showupdateform(id, name, price){
-    document.querySelector("#updatesection").computedStyleMap.display = "block"
-    document.querySelector('#updateName').value = name
+    document.querySelector("#updatesection").style.display = "block"
+    document.querySelector("#updateName").value = name
     document.querySelector("#updateID").value = id
-    document.querySelector("updatePrice").value = price
+    document.querySelector("#updatePrice").value = price
 }
 
-// function to update the selected item name and or price
+// update the selected item's name and/or price
 async function updateItem(){
     const id = document.querySelector("#updateID").value
     const name = document.querySelector("#updateName").value
     const price = document.querySelector("#updatePrice").value
-    
-    // update the json data in the localhost
-    const res = await fetch(`http://127.0.0.1:5000/items/${id}`, {
+
+    const res = await fetch(`/items/${id}`, {
         method: "PUT",
-        headers: {"Content-type" : "application/json"},
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({name: name, price: Number(price)})
     })
     const html = await res.text()
-    document.body.innerHTML = html
+    document.open()
+    document.write(html)   // show update.html (keeps its CSS link)
+    document.close()
 }
 
-//DELETE ITEM
+// DELETE ITEM
 async function deleteitem(id){
-    const res = await fetch(`http://127.0.0.1:5000/items/${id}` ,{
-        method: "DELETE",
-    })
+    const res = await fetch(`/items/${id}`, {method: "DELETE"})
     const html = await res.text()
-    document.body.innerHTML = html
-
+    document.open()
+    document.write(html)   // show delete.html
+    document.close()
 }
-

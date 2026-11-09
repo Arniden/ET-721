@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static' , filename = 'style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <title>Delete Item {{item_id}}</title>
 </head>
 <body>
-    <h1>Item Deleted</h1>
-    <p>ID: {{item_id}}</p>
-    <p>Deleted value: {{delected_item}}</p>
-    <a href="{{url_for('home')}}"> Back to Home</a>
+    <h1 class="title">Arnaud Tadonkeng</h1>
+    <div class="result">
+        <h1>Item deleted</h1>
+        <p><span class="label">ID:</span> {{item_id}}</p>
+        <p><span class="label">Deleted name:</span> {{deleted_item.name}}</p>
+        <p><span class="label">Deleted price:</span> {{deleted_item.price}}</p>
+        <a class="back" href="{{url_for('home')}}">Back to home</a>
+    </div>
 </body>
 </html>
